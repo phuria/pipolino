@@ -9,4 +9,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 + Configuration for travis, scrutinizer, phpunit and composer
-+ Pipolino
++ Pipolino with tests
++ README.md
