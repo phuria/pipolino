@@ -1,0 +1,46 @@
+filter:
+  excluded_paths:
+      - 'tests/*'
+      - 'vendor/*'
+
+before_commands:
+  - 'composer install'
+
+checks:
+  php:
+    code_rating: true
+    duplication: true
+
+coding_style:
+  php:
+    spaces:
+      around_operators:
+        concatenation: true
+
+build:
+  tests:
+    override:
+      -
+        command: './vendor/bin/phpunit --configuration ci.phpunit.xml'
+        coverage:
+          file: 'coverage.clover'
+          format: 'clover'
+    after:
+      - 'wget https://scrutinizer-ci.com/ocular.phar'
+      - 'php ocular.phar code-coverage:upload --format=php-clover --repository="g/phuria/pipolino" coverage.clover'
+
+tools:
+    external_code_coverage: true
+    php_mess_detector: true
+    php_code_sniffer: true
+    sensiolabs_security_checker: true
+    php_code_coverage: true
+    php_pdepend: true
+    php_loc:
+        enabled: true
+        excluded_dirs: [vendor, tests]
+    php_cpd:
+        enabled: true
+        excluded_dirs: [vendor, tests]
+    php_sim: false
+
