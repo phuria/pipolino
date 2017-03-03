@@ -32,6 +32,36 @@ echo $pipolino->process(20); //output: 40
 Pipolino are implemented as __immutable__. Any change on object (eg. add new stage)
 creates new object.
 
+## Stage objects
+
+Object can be used as a stage. It must have only implemented `__invoke` method.
+ 
+```php
+class CacheStage
+{
+    private $cache;
+    
+    public function __construct(CacheInterface $cache)
+    {
+        $this->cache = $cache;
+    }
+    
+    public function __invoke(callable $next, $result, array $criteria)
+    {
+        $hash = sha1(serialize($criteria));
+        
+        if ($this->cache->has($hash)) {
+            return $this->cache->get($hash);
+        }
+        
+        $result = $next($result, $criteria);
+        $this->cache->set($hash, $result, 3600);
+        
+        return $result;
+    }
+}
+```
+
 ## Many arguments
 
 Pipolino (in contrast to pipeline) accepts any number of arguments to process.
