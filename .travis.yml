@@ -11,4 +11,4 @@ env:
 install:
   - 'composer $COMPOSER_ARGS'
 script:
-  - 'phpunit tests'
+  - 'vendor/bin/phpunit tests'
