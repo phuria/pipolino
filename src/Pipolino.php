@@ -22,11 +22,19 @@ class Pipolino
     private $stages;
 
     /**
-     * @param array $stages
+     * @var callable
      */
-    public function __construct(array $stages = [])
+    private $defaultStage;
+
+    /**
+     * @param array    $stages
+     * @param callable $defaultStage
+     */
+    public function __construct(array $stages = [], callable $defaultStage = null)
     {
         $this->stages = $stages;
+        $this->defaultStage = $defaultStage ?: new DefaultStage();
+        dump($this->defaultStage);
     }
 
     /**
@@ -48,13 +56,14 @@ class Pipolino
     public function process(...$args)
     {
         if (0 === count($this->stages)) {
-            return reset($args);
+            return call_user_func($this->defaultStage, ...$args);
         }
 
         $stages = $this->stages;
         $currentStage = array_shift($stages);
+
         $next = function (...$args) use ($stages) {
-            return (new Pipolino($stages))->process(...$args);
+            return (new Pipolino($stages, $this->defaultStage))->process(...$args);
         };
 
         return call_user_func($currentStage, $next, ...$args);
@@ -70,6 +79,16 @@ class Pipolino
         $stages = $this->stages;
         $stages[] = $stage;
 
-        return new self($stages);
+        return new self($stages, $this->defaultStage);
+    }
+
+    /**
+     * @param callable $stage
+     *
+     * @return Pipolino
+     */
+    public function withDefaultStage(callable $stage)
+    {
+        return new self($this->stages, $stage);
     }
 }

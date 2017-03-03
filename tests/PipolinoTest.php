@@ -90,4 +90,18 @@ class PipolinoTest extends \PHPUnit_Framework_TestCase
 
         static::assertSame(10 * 10 * 10, $pipolino->process(10));
     }
+
+    /**
+     * @small
+     */
+    public function testCustomDefaultStage()
+    {
+        $pipolino = (new Pipolino())->addStage(function (callable $next, $a, $b) {
+            return $next($a, $b);
+        })->withDefaultStage(function ($a, $b) {
+            return $a + $b;
+        });
+
+        static::assertSame(5, $pipolino->process(2, 3, 5));
+    }
 }
