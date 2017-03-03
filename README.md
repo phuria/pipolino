@@ -20,11 +20,18 @@ composer require phuria/pipolino
 ## Usage
 
 ```php
-$pipolino = (new Pipolino)->addStage(function(callable $next, $payload) {
-    return $next($payload * 2);
-});
+$pipolino = (new Pipolino())
+    ->addStage(function(callable $next, $payload) {
+        return $next($payload * 2); // 20 * 2
+    })
+    ->addStage(function (callable $next, $payload) {
+        return $next($payload + 1); // 40 + 1
+    })
+    ->addStage(function (callable $next, $payload) {
+        return $next($payload / 10); // 41 / 10
+    });
 
-echo $pipolino->process(20); //output: 40
+echo $pipolino->process(20); //output: 4.1
 ```
 
 ## Immutable
