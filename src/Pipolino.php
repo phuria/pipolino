@@ -34,7 +34,6 @@ class Pipolino
     {
         $this->stages = $stages;
         $this->defaultStage = $defaultStage ?: new DefaultStage();
-        dump($this->defaultStage);
     }
 
     /**
