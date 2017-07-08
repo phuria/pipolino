@@ -14,7 +14,7 @@ namespace Phuria\Pipolino\Tests;
 use Phuria\Pipolino\DefaultStage;
 
 /**
- * @author Beniamin Jonatan Šimko <spam@simko.it>
+ * @author Beniamin Jonatan Šimko <contact@simko.it>
  */
 class DefaultStageTest extends \PHPUnit_Framework_TestCase
 {

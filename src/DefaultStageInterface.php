@@ -12,7 +12,7 @@
 namespace Phuria\Pipolino;
 
 /**
- * @author Beniamin Jonatan Šimko <spam@simko.it>
+ * @author Beniamin Jonatan Šimko <concat@simko.it>
  */
 interface DefaultStageInterface
 {
@@ -21,5 +21,5 @@ interface DefaultStageInterface
      *
      * @return mixed
      */
-    function __invoke(...$args);
+    public function __invoke(...$args);
 }

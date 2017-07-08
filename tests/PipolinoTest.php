@@ -11,10 +11,11 @@
 
 namespace Phuria\Pipolino\Tests;
 
+use Phuria\Pipolino\InvalidStageException;
 use Phuria\Pipolino\Pipolino;
 
 /**
- * @author Beniamin Jonatan Šimko <spam@simko.it>
+ * @author Beniamin Jonatan Šimko <contact@simko.it>
  */
 class PipolinoTest extends \PHPUnit_Framework_TestCase
 {
@@ -103,5 +104,32 @@ class PipolinoTest extends \PHPUnit_Framework_TestCase
         });
 
         static::assertSame(5, $pipolino->process(2, 3, 5));
+    }
+
+    /**
+     * @small
+     */
+    public function testInvalidStageString()
+    {
+        $this->expectException(InvalidStageException::class);
+        new Pipolino(['test']);
+    }
+
+    /**
+     * @small
+     */
+    public function testInvalidStageArray()
+    {
+        $this->expectException(InvalidStageException::class);
+        new Pipolino([['a', 'b', 'c']]);
+    }
+
+    /**
+     * @small
+     */
+    public function testInvalidStageObject()
+    {
+        $this->expectException(InvalidStageException::class);
+        new Pipolino([new \DateTime()]);
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-namespace Phuria\Pipolino;
-
 /**
  * This file is part of phuria/pipolino package.
  *
@@ -11,8 +9,10 @@ namespace Phuria\Pipolino;
  * file that was distributed with this source code.
  */
 
+namespace Phuria\Pipolino;
+
 /**
- * @author Beniamin Jonatan Šimko <spam@simko.it>
+ * @author Beniamin Jonatan Šimko <contact@simko.it>
  */
 class Pipolino
 {
@@ -29,9 +29,17 @@ class Pipolino
     /**
      * @param array    $stages
      * @param callable $defaultStage
+     *
+     * @throws InvalidStageException
      */
     public function __construct(array $stages = [], callable $defaultStage = null)
     {
+        foreach ($stages as $stage) {
+            if (false === is_callable($stage)) {
+                throw InvalidStageException::create($stage);
+            }
+        }
+
         $this->stages = $stages;
         $this->defaultStage = $defaultStage ?: new DefaultStage();
     }

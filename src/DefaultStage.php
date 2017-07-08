@@ -12,7 +12,7 @@
 namespace Phuria\Pipolino;
 
 /**
- * @author Beniamin Jonatan Šimko <spam@simko.it>
+ * @author Beniamin Jonatan Šimko <contact@simko.it>
  */
 class DefaultStage implements DefaultStageInterface
 {
